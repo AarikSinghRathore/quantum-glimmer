@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -15,11 +15,18 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Holographic JARVIS Variants
+        holo: "bg-transparent border-2 border-primary text-primary font-heading uppercase tracking-wider shadow-glow hover:bg-primary/10 hover:scale-105 hover:shadow-[0_0_60px_hsl(var(--glow-cyan)/0.6)] active:scale-95",
+        holoSecondary: "bg-transparent border-2 border-secondary text-secondary font-heading uppercase tracking-wider shadow-[0_0_30px_hsl(var(--glow-blue)/0.4)] hover:bg-secondary/10 hover:scale-105 hover:shadow-[0_0_50px_hsl(var(--glow-blue)/0.6)] active:scale-95",
+        holoAccent: "bg-transparent border-2 border-accent text-accent font-heading uppercase tracking-wider shadow-[0_0_30px_hsl(var(--glow-violet)/0.4)] hover:bg-accent/10 hover:scale-105 hover:shadow-[0_0_50px_hsl(var(--glow-violet)/0.6)] active:scale-95",
+        holoHero: "bg-gradient-primary text-foreground font-heading uppercase tracking-widest text-lg border-2 border-primary shadow-[0_0_40px_hsl(var(--glow-cyan)/0.5),0_0_80px_hsl(var(--glow-cyan)/0.3)] hover:scale-110 hover:shadow-[0_0_60px_hsl(var(--glow-cyan)/0.7),0_0_100px_hsl(var(--glow-cyan)/0.5)] active:scale-95 transition-all duration-300",
+        success: "bg-transparent border-2 border-success text-success font-heading uppercase tracking-wider shadow-[0_0_30px_hsl(var(--success)/0.4)] hover:bg-success/10 hover:scale-105 active:scale-95",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
+        xl: "h-14 rounded-lg px-10 text-base",
         icon: "h-10 w-10",
       },
     },
