@@ -3,10 +3,28 @@ import { HolographicGrid } from "@/components/HolographicGrid";
 import { FloatingOrbs } from "@/components/FloatingOrbs";
 import { Rotating3DShape } from "@/components/Rotating3DShape";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Image, Settings } from "lucide-react";
+import { Sparkles, Image, Settings, X, Palette, Zap, Volume2, Grid3x3 } from "lucide-react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [showGallery, setShowGallery] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [settings, setSettings] = useState({
+    holographicGrid: true,
+    floatingParticles: true,
+    soundEffects: false,
+    enhancedGlow: true,
+  });
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -22,7 +40,7 @@ const Home = () => {
         {/* App Title */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-7xl font-heading neon-text mb-4 tracking-widest">
-            HOLOCONVERT AI
+            SPECTRACALL AI
           </h1>
           <p className="text-muted text-lg md:text-xl font-body tracking-wide">
             Transform 2D Photos into Stunning 3D Holograms
@@ -89,16 +107,116 @@ const Home = () => {
 
         {/* Bottom Navigation */}
         <div className="flex gap-4 mt-12">
-          <Button variant="holo" size="lg">
+          <Button variant="holo" size="lg" onClick={() => setShowGallery(true)}>
             <Image className="w-5 h-5" />
             Gallery
           </Button>
-          <Button variant="holoSecondary" size="lg">
+          <Button variant="holoSecondary" size="lg" onClick={() => setShowSettings(true)}>
             <Settings className="w-5 h-5" />
             Settings
           </Button>
         </div>
       </div>
+
+      {/* Gallery Dialog */}
+      <Dialog open={showGallery} onOpenChange={setShowGallery}>
+        <DialogContent className="glass-panel border-primary/30">
+          <DialogHeader>
+            <DialogTitle className="font-heading text-2xl neon-text">HOLOGRAM GALLERY</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
+              Your converted 3D holograms will appear here
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-8 text-center">
+            <div className="mb-6 flex justify-center">
+              <div className="relative">
+                <Rotating3DShape shape="cube" size={100} speed={0.5} />
+              </div>
+            </div>
+            <p className="text-muted font-body mb-2">No holograms yet</p>
+            <p className="text-sm text-muted-foreground">
+              Convert your first photo to see it here in the gallery
+            </p>
+            <Button 
+              variant="holo" 
+              className="mt-6"
+              onClick={() => {
+                setShowGallery(false);
+                navigate("/upload");
+              }}
+            >
+              <Sparkles className="w-4 h-4" />
+              Start Converting
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Settings Dialog */}
+      <Dialog open={showSettings} onOpenChange={setShowSettings}>
+        <DialogContent className="glass-panel border-primary/30">
+          <DialogHeader>
+            <DialogTitle className="font-heading text-2xl neon-text">SYSTEM SETTINGS</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
+              Customize your holographic experience
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Grid3x3 className="w-5 h-5 text-primary" />
+                <Label htmlFor="grid" className="font-body">Holographic Grid</Label>
+              </div>
+              <Switch
+                id="grid"
+                checked={settings.holographicGrid}
+                onCheckedChange={(checked) => 
+                  setSettings(prev => ({ ...prev, holographicGrid: checked }))
+                }
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Sparkles className="w-5 h-5 text-secondary" />
+                <Label htmlFor="particles" className="font-body">Floating Particles</Label>
+              </div>
+              <Switch
+                id="particles"
+                checked={settings.floatingParticles}
+                onCheckedChange={(checked) => 
+                  setSettings(prev => ({ ...prev, floatingParticles: checked }))
+                }
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Volume2 className="w-5 h-5 text-accent" />
+                <Label htmlFor="sound" className="font-body">Sound Effects</Label>
+              </div>
+              <Switch
+                id="sound"
+                checked={settings.soundEffects}
+                onCheckedChange={(checked) => 
+                  setSettings(prev => ({ ...prev, soundEffects: checked }))
+                }
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Zap className="w-5 h-5 text-primary" />
+                <Label htmlFor="glow" className="font-body">Enhanced Glow</Label>
+              </div>
+              <Switch
+                id="glow"
+                checked={settings.enhancedGlow}
+                onCheckedChange={(checked) => 
+                  setSettings(prev => ({ ...prev, enhancedGlow: checked }))
+                }
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
